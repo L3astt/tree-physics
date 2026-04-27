@@ -1,7 +1,6 @@
 package com.farcr.treephysics.api.manager;
 
 import dev.ryanhcode.sable.companion.math.BoundingBox3ic;
-import dev.ryanhcode.sable.sublevel.ServerSubLevel;
 import dev.ryanhcode.sable.sublevel.SubLevel;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.core.BlockPos;
@@ -13,7 +12,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.saveddata.SavedData;
-import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3d;
 
 import java.util.List;
@@ -21,6 +19,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class TreeServerHandler extends SavedData {
+    public static final int MAX_LIFE_TICKS = 144000;
     public static final String ID = "treephysics_trees";
 
     private final Map<UUID, TreeData> trees = new Object2ObjectOpenHashMap<>();
@@ -35,19 +34,15 @@ public class TreeServerHandler extends SavedData {
     }
 
     public void tick() {
-        int maxLifeTicks = 200;
-
         for (TreeData tree : this.trees.values()) {
             SubLevel subLevel = tree.getSubLevel(this.level);
             if(subLevel == null) {
                 continue;
             }
 
-            if (tree.lifeTicks > maxLifeTicks) {
-                Iterable<BlockPos> posIterator = getBlocksToBreak(subLevel);
-                for (BlockPos blockPos : posIterator) {
-                    subLevel.getLevel().destroyBlock(blockPos, true);
-                }
+            if (tree.lifeTicks > MAX_LIFE_TICKS) {
+                subLevel.markRemoved();
+                continue;
             }
 
             Vector3d dir = subLevel.logicalPose().transformNormal(new Vector3d(0, 1, 0));
@@ -71,19 +66,6 @@ public class TreeServerHandler extends SavedData {
             this.setDirty(true);
         }
 
-    }
-
-    private static @NotNull Iterable<BlockPos> getBlocksToBreak(SubLevel subLevel) {
-        BoundingBox3ic box = subLevel.getPlot().getBoundingBox();
-        Iterable<BlockPos> posIterator;
-        if(box.width() > box.height()) {
-            posIterator = BlockPos.betweenClosed(box.minX(), box.minY(), box.minZ(), box.minX(), box.maxY(), box.maxZ());
-        } else if(box.length() > box.height()) {
-            posIterator = BlockPos.betweenClosed(box.minX(), box.minY(), box.minZ(), box.maxX(), box.maxY(), box.minZ());
-        } else {
-            posIterator = BlockPos.betweenClosed(box.minX(), box.maxY(), box.minZ(), box.maxX(), box.maxY(), box.maxZ());
-        }
-        return posIterator;
     }
 
     public void setTree(SubLevel subLevel) {
