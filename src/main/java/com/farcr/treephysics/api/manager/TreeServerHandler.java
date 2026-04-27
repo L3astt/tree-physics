@@ -1,8 +1,14 @@
 package com.farcr.treephysics.api.manager;
 
 import com.farcr.treephysics.TreePhysicsConfig;
+import dev.ryanhcode.sable.api.physics.PhysicsPipeline;
+import dev.ryanhcode.sable.api.physics.handle.RigidBodyHandle;
 import dev.ryanhcode.sable.companion.math.BoundingBox3ic;
+import dev.ryanhcode.sable.companion.math.JOMLConversion;
+import dev.ryanhcode.sable.physics.config.dimension_physics.DimensionPhysicsData;
+import dev.ryanhcode.sable.sublevel.ServerSubLevel;
 import dev.ryanhcode.sable.sublevel.SubLevel;
+import dev.ryanhcode.sable.sublevel.system.SubLevelPhysicsSystem;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -33,6 +39,20 @@ public class TreeServerHandler extends SavedData {
         this.level = level;
     }
 
+    public void physicsTick(ServerLevel level, SubLevelPhysicsSystem system, PhysicsPipeline pipeline, double timeStep) {
+        for (TreeData tree : this.trees.values()) {
+            ServerSubLevel subLevel = (ServerSubLevel) tree.getSubLevel(this.level);
+            if(subLevel == null) {
+                continue;
+            }
+
+            Vector3d gravity = DimensionPhysicsData.getGravity(level);
+
+            RigidBodyHandle handle = system.getPhysicsHandle(subLevel);
+            handle.addLinearAndAngularVelocity(gravity.mul(timeStep), JOMLConversion.ZERO);
+        }
+    }
+
     public void tick() {
         for (TreeData tree : this.trees.values()) {
             SubLevel subLevel = tree.getSubLevel(this.level);
@@ -45,6 +65,7 @@ public class TreeServerHandler extends SavedData {
                 continue;
             }
 
+            // TODO rework
             Vector3d dir = subLevel.logicalPose().transformNormal(new Vector3d(0, 1, 0));
             double uprightness = dir.dot(0, 1, 0);
             double threshold = 0.25;

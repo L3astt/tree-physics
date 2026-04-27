@@ -46,6 +46,7 @@ public class TreeUtil {
             new BlockPos(0, 1, 1),
             new BlockPos(0, -1, -1),
             new BlockPos(0, -1, 1),
+            new BlockPos(0, 1, -1),
             new BlockPos(1, 1, 1),
             new BlockPos(1, 1, -1),
             new BlockPos(-1, 1, -1),

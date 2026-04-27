@@ -1,10 +1,13 @@
 package com.farcr.treephysics.event;
 
 import com.farcr.treephysics.TreePhysics;
+import com.farcr.treephysics.api.manager.TreeServerHandler;
 import com.farcr.treephysics.api.manager.TreeSubLevelObserver;
 import com.farcr.treephysics.api.tree_gathering.TreeGatherer;
+import dev.ryanhcode.sable.api.physics.PhysicsPipeline;
 import dev.ryanhcode.sable.api.sublevel.ServerSubLevelContainer;
 import dev.ryanhcode.sable.api.sublevel.SubLevelContainer;
+import dev.ryanhcode.sable.sublevel.system.SubLevelPhysicsSystem;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
@@ -29,5 +32,12 @@ public class CommonEvents {
         }
 
         serverContainer.addObserver(new TreeSubLevelObserver(serverContainer.getLevel()));
+    }
+
+    public static void postPhysicsTick(SubLevelPhysicsSystem system, double timeStep) {
+        ServerLevel level = system.getLevel();
+        TreeServerHandler handler = TreeServerHandler.get(level);
+        PhysicsPipeline pipeline = system.getPipeline();
+        handler.physicsTick(level, system, pipeline, timeStep);
     }
 }
