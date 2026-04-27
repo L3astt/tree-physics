@@ -1,8 +1,10 @@
 package com.farcr.treephysics.api.tree_gathering;
 
 import com.farcr.treephysics.api.TreeUtil;
+import com.farcr.treephysics.api.manager.TreeServerHandler;
 import dev.ryanhcode.sable.api.SubLevelAssemblyHelper;
 import dev.ryanhcode.sable.companion.math.BoundingBox3i;
+import dev.ryanhcode.sable.sublevel.ServerSubLevel;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -26,11 +28,11 @@ public class TreeGatherer {
         List<Collection<BlockPos>> toSplit = new ArrayList<>();
 
         Set<BlockPos> willSplit = new HashSet<>();
-        for (BlockPos offset : TreeUtil.DIRECTION_OFFSETS) {
+        for (BlockPos offset : TreeUtil.DIRECTION_OFFSETS_CORNERS) {
             BlockPos start = brokenPos.offset(offset);
             if(willSplit.contains(start)) continue;
 
-            Tree tree = gatherTree(level, start, TreeUtil::treeSpread, TreeUtil.DIRECTION_OFFSETS, brokenPos);
+            Tree tree = gatherTree(level, start, TreeUtil::treeSpread, TreeUtil.DIRECTION_OFFSETS_CORNERS, brokenPos);
             if(tree != null && !tree.hasRoot()) {
                 toSplit.add(tree.blocks());
                 willSplit.addAll(tree.blocks());
@@ -38,17 +40,17 @@ public class TreeGatherer {
         }
 
         for (Collection<BlockPos> blocks : toSplit) {
-
-            SubLevelAssemblyHelper.assembleBlocks(level, brokenPos, blocks, new BoundingBox3i(brokenPos, brokenPos));
+            ServerSubLevel serverSubLevel = SubLevelAssemblyHelper.assembleBlocks(level, brokenPos, blocks, new BoundingBox3i(brokenPos, brokenPos));
+            TreeServerHandler handler = TreeServerHandler.get(level);
+            handler.setTree(serverSubLevel);
         }
-
     }
 
     public static boolean isValidTree(BlockGetter blockGetter, BlockPos start) {
         BlockState state = blockGetter.getBlockState(start);
         if(!state.is(BlockTags.LOGS)) return false;
 
-        Tree tree = gatherTree(blockGetter, start, TreeUtil::logSpread, TreeUtil.DIRECTION_OFFSETS, null);
+        Tree tree = gatherTree(blockGetter, start, TreeUtil::logSpread, TreeUtil.DIRECTION_OFFSETS_CORNERS, null);
         if(tree != null) {
             return tree.hasRoot();
         }
@@ -94,9 +96,11 @@ public class TreeGatherer {
                     continue;
                 }
 
-                if(!nextPos.equals(ignore) && predicate.test(centerState, nextState, context)) {
-                    visited.add(nextLong);
-                    queue.add(nextPos);
+                if(!nextPos.equals(ignore)) {
+                    if(predicate.test(centerState, nextState, context)) {
+                        visited.add(nextLong);
+                        queue.add(nextPos);
+                    }
                 }
             }
 

@@ -1,10 +1,14 @@
 package com.farcr.treephysics.event;
 
 import com.farcr.treephysics.TreePhysics;
+import com.farcr.treephysics.api.manager.TreeSubLevelObserver;
 import com.farcr.treephysics.api.tree_gathering.TreeGatherer;
+import dev.ryanhcode.sable.api.sublevel.ServerSubLevelContainer;
+import dev.ryanhcode.sable.api.sublevel.SubLevelContainer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.level.BlockEvent;
@@ -19,4 +23,11 @@ public class CommonEvents {
         }
     }
 
+    public static void containerReady(Level level, SubLevelContainer container) {
+        if(!(container instanceof ServerSubLevelContainer serverContainer)) {
+            return;
+        }
+
+        serverContainer.addObserver(new TreeSubLevelObserver(serverContainer.getLevel()));
+    }
 }

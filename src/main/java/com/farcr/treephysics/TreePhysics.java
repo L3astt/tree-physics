@@ -2,6 +2,8 @@ package com.farcr.treephysics;
 
 import com.farcr.treephysics.event.CommonEvents;
 import com.mojang.logging.LogUtils;
+import dev.ryanhcode.sable.platform.SableEventPlatform;
+import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
@@ -15,6 +17,11 @@ public class TreePhysics {
 
     public TreePhysics(IEventBus modEventBus, ModContainer modContainer) {
         NeoForge.EVENT_BUS.register(CommonEvents.class);
+        SableEventPlatform.INSTANCE.onSubLevelContainerReady(CommonEvents::containerReady);
+    }
+
+    public static ResourceLocation path(String id) {
+        return ResourceLocation.fromNamespaceAndPath(MOD_ID, id);
     }
 
 }

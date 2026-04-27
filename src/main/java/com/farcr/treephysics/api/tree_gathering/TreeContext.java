@@ -2,6 +2,7 @@ package com.farcr.treephysics.api.tree_gathering;
 
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class TreeContext {
@@ -12,7 +13,7 @@ public class TreeContext {
         if (this.leafBlock != null) {
             return state.is(this.leafBlock);
         } else {
-            if (state.is(BlockTags.LEAVES)) {
+            if (state.getBlock() instanceof LeavesBlock) {
                 this.leafBlock = state.getBlock();
                 return true;
             }

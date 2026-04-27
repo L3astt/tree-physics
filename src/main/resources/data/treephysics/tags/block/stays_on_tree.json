@@ -1,0 +1,9 @@
+{
+  "values": [
+    "minecraft:vine",
+    { "id": "nomansland:shelf_mushroom_block", "required": false },
+    { "id": "nomansland:shelf_mushroom", "required": false },
+    { "id": "nomansland:apple", "required": false },
+    { "id": "nomansland:pear", "required": false }
+  ]
+}
