@@ -1,4 +1,4 @@
-package com.farcr.treephysics;
+package com.farcr.treephysics.index;
 
 import net.neoforged.neoforge.common.ModConfigSpec;
 

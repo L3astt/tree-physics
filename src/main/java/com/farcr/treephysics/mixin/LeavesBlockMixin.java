@@ -1,6 +1,6 @@
 package com.farcr.treephysics.mixin;
 
-import com.farcr.treephysics.LeavesBlockCallback;
+import com.farcr.treephysics.collision_callback.LeavesBlockCallback;
 import dev.ryanhcode.sable.api.block.BlockWithSubLevelCollisionCallback;
 import dev.ryanhcode.sable.api.physics.callback.BlockSubLevelCollisionCallback;
 import net.minecraft.world.level.block.LeavesBlock;

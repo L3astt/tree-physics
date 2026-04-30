@@ -1,6 +1,6 @@
 package com.farcr.treephysics.api;
 
-import com.farcr.treephysics.TreePhysicsTags;
+import com.farcr.treephysics.index.TreePhysicsTags;
 import com.farcr.treephysics.api.tree_gathering.TreeContext;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.LeavesBlock;

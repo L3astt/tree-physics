@@ -1,11 +1,10 @@
 package com.farcr.treephysics.api.manager;
 
-import com.farcr.treephysics.TreePhysicsConfig;
 import com.farcr.treephysics.client.TreeManager;
+import com.farcr.treephysics.index.TreePhysicsConfig;
 import com.farcr.treephysics.networking.UpdateClientTrees;
 import dev.ryanhcode.sable.api.physics.PhysicsPipeline;
 import dev.ryanhcode.sable.api.physics.handle.RigidBodyHandle;
-import dev.ryanhcode.sable.companion.math.BoundingBox3ic;
 import dev.ryanhcode.sable.companion.math.JOMLConversion;
 import dev.ryanhcode.sable.physics.config.dimension_physics.DimensionPhysicsData;
 import dev.ryanhcode.sable.sublevel.ServerSubLevel;
@@ -13,7 +12,6 @@ import dev.ryanhcode.sable.sublevel.SubLevel;
 import dev.ryanhcode.sable.sublevel.system.SubLevelPhysicsSystem;
 import foundry.veil.api.network.VeilPacketManager;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -23,8 +21,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.LeavesBlock;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.saveddata.SavedData;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
@@ -74,24 +70,6 @@ public class TreeServerHandler extends SavedData implements TreeManager {
             if (tree.lifeTicks > TreePhysicsConfig.MAX_LIFE_TICKS.getAsInt()) {
                 subLevel.markRemoved();
                 continue;
-            }
-
-            // TODO rework
-            Vector3d dir = subLevel.logicalPose().transformNormal(new Vector3d(0, 1, 0));
-            double uprightness = dir.dot(0, 1, 0);
-            double threshold = 0.25;
-
-            if(uprightness < threshold && (tree.lifeTicks % 5 == 0) && tree.leafBreakProgress <= LeavesBlock.DECAY_DISTANCE) {
-                int distance = LeavesBlock.DECAY_DISTANCE - tree.leafBreakProgress;
-                BoundingBox3ic box = subLevel.getPlot().getBoundingBox();
-                Iterable<BlockPos> posIterator = BlockPos.betweenClosed(box.minX(), box.minY(), box.minZ(), box.maxX(), box.maxY(), box.maxZ());
-                for (BlockPos blockPos : posIterator) {
-                    BlockState state = subLevel.getLevel().getBlockState(blockPos);
-                    if(state.getBlock() instanceof LeavesBlock && state.getValue(LeavesBlock.DISTANCE) == distance) {
-                        subLevel.getLevel().destroyBlock(blockPos, true);
-                    }
-                }
-                tree.leafBreakProgress++;
             }
 
             tree.lifeTicks++;

@@ -18,6 +18,14 @@ public interface TreeManager {
         return isTree(subLevel);
     }
 
+    default @Nullable SubLevel getTree(BlockPos pos) {
+        SubLevel subLevel = Sable.HELPER.getContaining(getLevel(), pos);
+        if(isTree(subLevel)) {
+            return subLevel;
+        }
+        return null;
+    }
+
     static TreeManager get(Level level) {
         if(level.isClientSide()) {
             return TreePhysicsClient.TREE_HANDLER;

@@ -4,6 +4,7 @@
   "package": "com.farcr.treephysics.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "BlockWithSubLevelCallbackMixin",
     "LeavesBlockMixin",
     "SubLevelAssemblyHelperMixin",
     "TrunkPlacerMixin"

@@ -1,6 +1,8 @@
 package com.farcr.treephysics;
 
 import com.farcr.treephysics.event.CommonEvents;
+import com.farcr.treephysics.index.TreePhysicsConfig;
+import com.farcr.treephysics.index.TreePhysicsParticleTypes;
 import com.farcr.treephysics.networking.TreePhysicsPackets;
 import com.mojang.logging.LogUtils;
 import dev.ryanhcode.sable.platform.SableEventPlatform;
@@ -23,6 +25,7 @@ public class TreePhysics {
         SableEventPlatform.INSTANCE.onPostPhysicsTick(CommonEvents::postPhysicsTick);
         modContainer.registerConfig(ModConfig.Type.COMMON, TreePhysicsConfig.SPEC);
         TreePhysicsPackets.init();
+        TreePhysicsParticleTypes.init(modEventBus);
     }
 
     public static ResourceLocation path(String id) {

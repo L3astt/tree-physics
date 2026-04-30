@@ -1,4 +1,4 @@
-package com.farcr.treephysics;
+package com.farcr.treephysics.collision_callback;
 
 import dev.ryanhcode.sable.companion.math.JOMLConversion;
 import dev.ryanhcode.sable.physics.callback.FragileBlockCallback;
