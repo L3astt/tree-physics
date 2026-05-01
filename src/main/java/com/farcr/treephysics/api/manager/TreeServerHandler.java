@@ -50,13 +50,15 @@ public class TreeServerHandler extends SavedData implements TreeManager {
                 continue;
             }
 
-            Vector3d gravity = DimensionPhysicsData.getGravity(level);
+            if(tree.lifeTicks <= 200) {
+                Vector3d gravity = DimensionPhysicsData.getGravity(level);
 
-            Vector3d dir = subLevel.logicalPose().transformNormal(new Vector3d(0, 1, 0));
-            double gravityScale = 1.0 -  Math.max(0, dir.dot(0, 1, 0));
+                Vector3d dir = subLevel.logicalPose().transformNormal(new Vector3d(0, 1, 0));
+                double gravityScale = 1.0 -  Math.max(0, dir.dot(0, 1, 0));
 
-            RigidBodyHandle handle = system.getPhysicsHandle(subLevel);
-            handle.addLinearAndAngularVelocity(gravity.mul(timeStep * gravityScale), JOMLConversion.ZERO);
+                RigidBodyHandle handle = system.getPhysicsHandle(subLevel);
+                handle.addLinearAndAngularVelocity(gravity.mul(timeStep * gravityScale), JOMLConversion.ZERO);
+            }
         }
     }
 
