@@ -21,6 +21,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ParticleUtils;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -56,7 +57,7 @@ public class CommonEvents {
         Level level = player.level();
         BlockPos pos = event.getPos();
 
-        if(!player.isShiftKeyDown() && player.getItemInHand(InteractionHand.MAIN_HAND).is(ItemTags.AXES)) {
+        if(!player.isShiftKeyDown() && level.getBlockState(pos).is(BlockTags.LOGS)) {
             List<ServerSubLevel> subLevels = TreeGatherer.trySplit((ServerLevel) event.getLevel(), pos);
             BlockState brokenState = level.getBlockState(pos);
             if(subLevels == null || subLevels.isEmpty()) return;
