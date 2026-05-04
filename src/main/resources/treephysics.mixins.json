@@ -8,7 +8,10 @@
     "collision_effects.LeavesBlockMixin",
     "rooted_dirt_placement.TrunkPlacerMixin",
     "tree_pushing.ServerboundPunchSubLevelPacketMixin",
-    "tree_splitting.SubLevelAssemblyHelperMixin"
+    "tree_splitting.SubLevelAssemblyHelperMixin",
+    "walk_through_leaves.BlockCollisionsMixin",
+    "walk_through_leaves.LivingEntityMixin",
+    "walk_through_leaves.SubLevelEntityCollisionMixin"
   ],
   "client": [
     "collision_effects.ParticleEngineMixin"

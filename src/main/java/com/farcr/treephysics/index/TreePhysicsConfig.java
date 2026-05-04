@@ -8,6 +8,8 @@ public class TreePhysicsConfig {
     public static final ModConfigSpec.IntValue DESPAWN_TIME;
     public static final ModConfigSpec.EnumValue<DespawnBehavior> DESPAWN_BEHAVIOR;
     public static final ModConfigSpec.BooleanValue CAN_BUILD;
+    public static final ModConfigSpec.BooleanValue CAN_WALK_THROUGH_LEAVES;
+    public static final ModConfigSpec.DoubleValue LEAF_WALKING_SPEED;
 
     public static final ModConfigSpec.DoubleValue GRAVITY_MULTIPLIER;
     public static final ModConfigSpec.IntValue GRAVITY_MULTIPLIER_TICKS;
@@ -33,6 +35,14 @@ public class TreePhysicsConfig {
         CAN_BUILD = builder
                 .comment("If trees can be built on")
                 .define("can_build", false);
+
+        CAN_WALK_THROUGH_LEAVES = builder
+                .comment("If entities should be able to walk through leaves")
+                .define("can_walk_through_leaves", true);
+
+        LEAF_WALKING_SPEED = builder
+                .comment("Multiplier for entity walking speed when in leaves")
+                .defineInRange("leaf_walking_speed", 0.67, 0.0, 1.0);
 
         builder.push("physics");
 
