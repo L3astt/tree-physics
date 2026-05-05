@@ -67,22 +67,4 @@ public abstract class LivingEntityMixin extends Entity {
         super.move(type, movement);
     }
 
-/*
-
-
-
-
-    @Inject(method = "onChangedBlock", at = @At("HEAD"))
-    private void treephysics$onChangedBlock(ServerLevel level, BlockPos pos, CallbackInfo ci) {
-        TreePhysics.onBlockChanged(level, pos, (LivingEntity) (Object) this);
-//        BlockState state = level.getBlockState(pos);
-//        if(state.getBlock() instanceof LeavesBlock) {
-//            this.addDeltaMovement(new Vec3(0, 100, 0));
-//            System.out.println("entered leaf at " + pos);
-//            this.treephysics$reduceFallSpeed = true;
-//            this.fallDistance -= 1;
-//        }
-    }
-*/
-
 }

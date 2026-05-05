@@ -10,6 +10,7 @@ public class TreePhysicsConfig {
     public static final ModConfigSpec.BooleanValue CAN_BUILD;
     public static final ModConfigSpec.BooleanValue CAN_WALK_THROUGH_LEAVES;
     public static final ModConfigSpec.DoubleValue LEAF_WALKING_SPEED;
+    public static final ModConfigSpec.DoubleValue TREE_ENTITY_DAMAGE;
 
     public static final ModConfigSpec.DoubleValue GRAVITY_MULTIPLIER;
     public static final ModConfigSpec.IntValue GRAVITY_MULTIPLIER_TICKS;
@@ -43,6 +44,10 @@ public class TreePhysicsConfig {
         LEAF_WALKING_SPEED = builder
                 .comment("Multiplier for entity walking speed when in leaves")
                 .defineInRange("leaf_walking_speed", 0.67, 0.0, 1.0);
+
+        TREE_ENTITY_DAMAGE = builder
+                .comment("How much damage a falling tree should inflict on an entity when moving at 1 block per tick")
+                .defineInRange("tree_entity_damage", 25, 0.0, Double.MAX_VALUE);
 
         builder.push("physics");
 

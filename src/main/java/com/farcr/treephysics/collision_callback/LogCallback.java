@@ -60,7 +60,7 @@ public class LogCallback extends FragileBlockCallback {
             }
 
             if(dustState != null && dustState.is(TreePhysicsTags.PRODUCES_DUST_ON_IMPACT)) {
-                level.sendParticles(new CollisionDustParticleOptions(dustState), hitPos.x, hitPos.y, hitPos.z, 3, 0, 0, 0, 1);
+                level.sendParticles(new CollisionDustParticleOptions(dustState), hitPos.x, hitPos.y, hitPos.z, 6, 0, 0, 0, 1);
             }
         }
 
