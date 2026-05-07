@@ -4,6 +4,7 @@
   "package": "com.farcr.treephysics.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "collision_effects.BeehiveBlockCallbackMixin",
     "collision_effects.BlockWithSubLevelCallbackMixin",
     "collision_effects.LeavesBlockMixin",
     "entity_damage.LivingEntityMixin",
