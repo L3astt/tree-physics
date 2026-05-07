@@ -37,7 +37,7 @@ public class TreeResult {
     }
 
     public void afterSpread(BlockGetter blockGetter, BlockPos pos) {
-        if(!this.root && blockGetter.getBlockState(pos.below()).is(TreePhysicsTags.ROOTS)) {
+        if(!this.root && blockGetter.getBlockState(pos.below()).is(TreePhysicsTags.ROOTS) && blockGetter.getBlockState(pos).is(BlockTags.LOGS)) {
             this.root = true;
         }
     }
