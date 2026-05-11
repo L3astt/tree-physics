@@ -158,6 +158,13 @@ public class ServerTreeManager extends SavedData implements TreeManager {
         }
     }
 
+    public int removeAll() {
+        int count = trees.size();
+        trees.clear();
+        this.setDirty();
+        return count;
+    }
+
     @Override
     public void setDirty(boolean dirty) {
         super.setDirty(dirty);

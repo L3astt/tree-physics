@@ -5,7 +5,9 @@ import com.farcr.treephysics.api.TreeUtil;
 import com.farcr.treephysics.api.manager.ServerTreeManager;
 import com.farcr.treephysics.api.manager.TreeSubLevelObserver;
 import com.farcr.treephysics.client.TreeManager;
+import com.farcr.treephysics.index.TreePhysicsCommands;
 import com.farcr.treephysics.index.TreePhysicsConfig;
+import com.mojang.brigadier.CommandDispatcher;
 import dev.ryanhcode.sable.Sable;
 import dev.ryanhcode.sable.api.physics.PhysicsPipeline;
 import dev.ryanhcode.sable.api.physics.handle.RigidBodyHandle;
@@ -15,6 +17,8 @@ import dev.ryanhcode.sable.companion.math.JOMLConversion;
 import dev.ryanhcode.sable.sublevel.ServerSubLevel;
 import dev.ryanhcode.sable.sublevel.SubLevel;
 import dev.ryanhcode.sable.sublevel.system.SubLevelPhysicsSystem;
+import net.minecraft.commands.CommandBuildContext;
+import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -39,6 +43,7 @@ import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.UseItemOnBlockEvent;
 import net.neoforged.neoforge.event.level.AlterGroundEvent;
@@ -168,6 +173,12 @@ public class CommonEvents {
         });
     }
 
+    @SubscribeEvent
+    public static void registerCommands(RegisterCommandsEvent event) {
+        CommandBuildContext context = event.getBuildContext();
+        CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();
+        TreePhysicsCommands.registerCommands(context, dispatcher);
+    }
 
     public static void containerReady(Level level, SubLevelContainer container) {
         if(!(container instanceof ServerSubLevelContainer serverContainer)) {
