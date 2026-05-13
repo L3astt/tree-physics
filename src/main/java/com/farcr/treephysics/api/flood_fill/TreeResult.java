@@ -18,7 +18,6 @@ public class TreeResult {
     private final Set<BlockPos> allBlocks = new ObjectOpenHashSet<>();
     private boolean root = false;
     private Block logBlock = null;
-    private Block leafBlock = null;
 
     public TreeResult(Collection<TagKey<Block>> tags) {
         for (TagKey<Block> tag : tags) {
@@ -55,15 +54,7 @@ public class TreeResult {
     }
 
     public boolean isLeaf(BlockState state) {
-        if (this.leafBlock != null) {
-            return state.is(this.leafBlock);
-        } else {
-            if (state.getBlock() instanceof LeavesBlock) {
-                this.leafBlock = state.getBlock();
-                return true;
-            }
-            return false;
-        }
+        return state.is(BlockTags.LEAVES);
     }
 
     public boolean isLog(BlockState state) {

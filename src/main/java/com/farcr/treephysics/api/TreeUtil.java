@@ -129,9 +129,11 @@ public class TreeUtil {
         }
 
         if(result.isLeaf(fromState) && result.isLeaf(toState)) {
-            int fromDistance = fromState.getValue(LeavesBlock.DISTANCE);
-            int toDistance = toState.getValue(LeavesBlock.DISTANCE);
-            return toDistance > fromDistance;
+            if(fromState.getBlock() == toState.getBlock()) {
+                int fromDistance = fromState.getValue(LeavesBlock.DISTANCE);
+                int toDistance = toState.getValue(LeavesBlock.DISTANCE);
+                return toDistance > fromDistance;
+            }
         }
 
         return false;
