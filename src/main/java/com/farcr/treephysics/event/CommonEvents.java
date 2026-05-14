@@ -21,20 +21,12 @@ import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.util.ParticleUtils;
-import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelSimulatedReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RotatedPillarBlock;
@@ -45,7 +37,6 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
-import net.neoforged.neoforge.event.entity.player.UseItemOnBlockEvent;
 import net.neoforged.neoforge.event.level.AlterGroundEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import org.joml.Vector3d;
@@ -109,13 +100,15 @@ public class CommonEvents {
     }
 
     @SubscribeEvent
-    public static void itemUseOnBlock(UseItemOnBlockEvent event) {
-        BlockPos pos = event.getPos();
-        SubLevel subLevel = Sable.HELPER.getContaining(event.getLevel(), pos);
-        TreeManager treeManager = TreeManager.get(event.getLevel());
+    public static void blockPlace(BlockEvent.EntityPlaceEvent event) {
+        if(event.getLevel() instanceof ServerLevel level) {
+            BlockPos pos = event.getPos();
+            SubLevel subLevel = Sable.HELPER.getContaining(level, pos);
+            ServerTreeManager treeManager = (ServerTreeManager) TreeManager.get(level);
 
-        if(treeManager instanceof ServerTreeManager serverTreeManager && treeManager.isTree(subLevel)) {
-            serverTreeManager.unsetTree(subLevel);
+            if(treeManager.isTree(subLevel)) {
+                treeManager.unsetTree(subLevel);
+            }
         }
     }
 
