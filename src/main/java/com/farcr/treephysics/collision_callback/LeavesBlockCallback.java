@@ -1,7 +1,10 @@
 package com.farcr.treephysics.collision_callback;
 
+import com.farcr.treephysics.index.TreePhysicsConfig;
+import dev.ryanhcode.sable.Sable;
 import dev.ryanhcode.sable.companion.math.JOMLConversion;
 import dev.ryanhcode.sable.physics.callback.FragileBlockCallback;
+import dev.ryanhcode.sable.sublevel.SubLevel;
 import dev.ryanhcode.sable.sublevel.system.SubLevelPhysicsSystem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -32,6 +35,13 @@ public class LeavesBlockCallback extends FragileBlockCallback {
 
         final SubLevelPhysicsSystem system = SubLevelPhysicsSystem.getCurrentlySteppingSystem();
         final ServerLevel level = system.getLevel();
+
+        if(!TreePhysicsConfig.STATIC_LEAF_COLLISION.getAsBoolean()) {
+            SubLevel subLevel = Sable.HELPER.getContaining(level, pos);
+            if(subLevel == null) {
+                return new CollisionResult(JOMLConversion.ZERO, true);
+            }
+        }
 
         // Double check that we're actually fragile before breaking (in-case pipeline gave us a slightly off collision position)
         final BlockState state = level.getBlockState(pos);

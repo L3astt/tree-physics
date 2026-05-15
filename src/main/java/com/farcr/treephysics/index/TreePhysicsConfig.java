@@ -17,6 +17,7 @@ public class TreePhysicsConfig {
     public static final ModConfigSpec.DoubleValue IMPULSE_FORCE;
     public static final ModConfigSpec.DoubleValue IMPULSE_TORQUE;
     public static final ModConfigSpec.DoubleValue EXTRA_PUSH_MULTIPLIER;
+    public static final ModConfigSpec.BooleanValue STATIC_LEAF_COLLISION;
 
     static {
         ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
@@ -70,6 +71,10 @@ public class TreePhysicsConfig {
         EXTRA_PUSH_MULTIPLIER = builder
                 .comment("How much extra pushing strength should be applied for upright trees")
                 .defineInRange("extra_push_multiplier", 1.5, 0.0, Double.MAX_VALUE);
+
+        STATIC_LEAF_COLLISION = builder
+                .comment("If leaves not on sub-levels should have collision")
+                .define("static_leaf_collision", false);
 
         builder.pop();
 
