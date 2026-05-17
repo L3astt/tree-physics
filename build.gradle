@@ -3,6 +3,7 @@ plugins {
     id 'maven-publish'
     id 'idea'
     id 'net.neoforged.moddev' version '2.0.141'
+    id "me.modmuss50.mod-publish-plugin" version "1.1.0"
 }
 
 version = mod_version
@@ -104,10 +105,6 @@ dependencies {
     implementation "curse.maven:no-mans-land-538493:7333863"
     implementation "curse.maven:biolith-852512:8045279"
     implementation "curse.maven:mixed-litter-1221222:7240064"
-
-    implementation "maven.modrinth:biomes-o-plenty:$biomes_o_plenty_version"
-    implementation "maven.modrinth:terrablender:$terra_blender_version"
-    implementation "maven.modrinth:glitchcore:$glitch_core_version"
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
@@ -142,6 +139,37 @@ publishing {
             url "file://${project.projectDir}/repo"
         }
     }
+}
+
+publishMods {
+    def modrinthToken = project.findProperty("modrinthPublishToken") ?: ''
+    def curseforgeToken = project.findProperty("curseforgePublishToken") ?: ''
+    def changelogFile = rootProject.file("changelog.md")
+
+    type = STABLE
+    file = jar.archiveFile
+    changelog = changelogFile.text
+    version = "$mod_version"
+    displayName = "$mod_name $mod_version"
+    modLoaders.add("neoforge")
+
+    modrinth {
+        accessToken = modrinthToken
+        projectId = "AlVH5pr8"
+        minecraftVersions.add(minecraft_version)
+        requires("sable")
+    }
+
+    curseforge {
+        accessToken = curseforgeToken
+        projectId = "1522010"
+        clientRequired = true
+        serverRequired = true
+        minecraftVersions.add(minecraft_version)
+        javaVersions.add(JavaVersion.VERSION_21)
+        requires("sable")
+    }
+
 }
 
 idea {
