@@ -80,7 +80,7 @@ public class CommonEvents {
 
                 BlockPos belowPos = pos.below();
                 BlockState belowState = level.getBlockState(belowPos);
-                if(belowState.is(Blocks.ROOTED_DIRT)) {
+                if(belowState.is(Blocks.ROOTED_DIRT) && TreePhysicsConfig.REMOVE_ROOTED_DIRT.get()) {
                     level.setBlock(belowPos, Blocks.DIRT.defaultBlockState(), 2);
                 }
 

@@ -13,6 +13,7 @@ public class TreePhysicsConfig {
     public static final ModConfigSpec.EnumValue<DespawnBehavior> DESPAWN_BEHAVIOR;
     public static final ModConfigSpec.BooleanValue DROP_ITEMS_ON_DESPAWN;
     public static final ModConfigSpec.BooleanValue ROOTED_DIRT_GENERATION;
+    public static final ModConfigSpec.BooleanValue REMOVE_ROOTED_DIRT;
     public static final ModConfigSpec.BooleanValue ROOTLESS_TREE_DETECTION;
     public static final ModConfigSpec.BooleanValue REQUIRES_AXE;
     public static final ModConfigSpec.BooleanValue PREVENT_INTERACTING_WITH_TREES;
@@ -45,6 +46,9 @@ public class TreePhysicsConfig {
 
         ROOTED_DIRT_GENERATION = create(builder, "Rooted Dirt Generation", "If rooted dirt should generate under trees")
                 .define("rooted_dirt_generation", true);
+
+        REMOVE_ROOTED_DIRT = create(builder, "Remove Rooted Dirt", "If rooted dirt should be converted to dirt when the log above it is broken")
+                .define("remove_rooted_dirt", true);
 
         ROOTLESS_TREE_DETECTION = create(builder, "Rootless Tree Detection", "Allow tree sub-levels to be created without a root block, requiring at least one dirt and one natural leaf instead")
                 .define("rootless_tree_detection", false);

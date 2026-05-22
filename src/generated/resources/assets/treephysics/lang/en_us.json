@@ -25,6 +25,8 @@
   "treephysics.config.leaf_walking_speed.tooltip": "Multiplier for entity walking speed when in leaves",
   "treephysics.config.prevent_interacting_with_trees": "Prevent Interacting With Trees",
   "treephysics.config.prevent_interacting_with_trees.tooltip": "If interacting with trees (block placement, item use, etc) should be prevented",
+  "treephysics.config.remove_rooted_dirt": "Remove Rooted Dirt",
+  "treephysics.config.remove_rooted_dirt.tooltip": "If rooted dirt should be converted to dirt when the log above it is broken",
   "treephysics.config.requires_axe": "Requires Axe",
   "treephysics.config.requires_axe.tooltip": "If an axe should be required to make tree sub-levels",
   "treephysics.config.rooted_dirt_generation": "Rooted Dirt Generation",
