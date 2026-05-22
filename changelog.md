@@ -1,3 +1,4 @@
-- Add compatibility for the Abnormals mods
-- Add compatibility for Spawn
-- Fix non-living entities being able to move through leaves
+- Fix trees being able to fall through the world when landing on leaves
+- Allow logs to attach to other types of logs if they're aligned
+- Add config for when a tree should be considered "small"
+- Add config for if rooted dirt should be removed when breaking the log above it
