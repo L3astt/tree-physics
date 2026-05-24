@@ -7,7 +7,9 @@ import dev.ryanhcode.sable.companion.math.BoundingBox3ic;
 import dev.ryanhcode.sable.sublevel.SubLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.level.LevelSimulatedReader;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HugeMushroomBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -42,6 +44,14 @@ public class TreeUtil {
 
     public static boolean isLeaf(BlockState state) {
         return state.is(TreePhysicsTags.LEAVES);
+    }
+
+    public static boolean canBeRoots(BlockState state) {
+        return !state.is(TreePhysicsTags.ROOTS) && state.is(TreePhysicsTags.CAN_BE_ROOTS);
+    }
+
+    public static boolean canBeRoots(LevelSimulatedReader level, BlockPos pos) {
+        return level.isStateAtPosition(pos.below(), TreeUtil::canBeRoots);
     }
 
     public static boolean isSameLeafType(BlockState first, BlockState second) {
@@ -107,6 +117,14 @@ public class TreeUtil {
         }
 
         return null;
+    }
+
+    public static BlockState getDefaultRoot() {
+        return Blocks.ROOTED_DIRT.defaultBlockState();
+    }
+
+    public static BlockState getRootForState(BlockState state) {
+        return getDefaultRoot();
     }
 
 }

@@ -2,10 +2,10 @@ package com.farcr.treephysics.event;
 
 import com.farcr.treephysics.TreePhysics;
 import com.farcr.treephysics.api.LeafGroupManager;
-import com.farcr.treephysics.api.util.TreeUtil;
 import com.farcr.treephysics.api.manager.ServerTreeManager;
 import com.farcr.treephysics.api.manager.TreeSubLevelObserver;
 import com.farcr.treephysics.api.util.FloodFillUtil;
+import com.farcr.treephysics.api.util.TreeUtil;
 import com.farcr.treephysics.client.TreeManager;
 import com.farcr.treephysics.data.TreePhysicsLang;
 import com.farcr.treephysics.index.TreePhysicsCommands;
@@ -81,7 +81,7 @@ public class CommonEvents {
 
                 BlockPos belowPos = pos.below();
                 BlockState belowState = level.getBlockState(belowPos);
-                if(belowState.is(Blocks.ROOTED_DIRT) && TreePhysicsConfig.REMOVE_ROOTED_DIRT.get()) {
+                if(TreeUtil.isRoot(belowState) && TreePhysicsConfig.REMOVE_ROOTED_DIRT.get()) {
                     level.setBlock(belowPos, Blocks.DIRT.defaultBlockState(), 2);
                 }
 
@@ -143,7 +143,7 @@ public class CommonEvents {
         event.setStateProvider((random, pos) -> {
             boolean isRoot = reader.isStateAtPosition(pos, TreeUtil::isRoot);
             if(isRoot) {
-                return Blocks.ROOTED_DIRT.defaultBlockState();
+                return TreeUtil.getDefaultRoot();
             }
             return provider.getState(random, pos);
         });
