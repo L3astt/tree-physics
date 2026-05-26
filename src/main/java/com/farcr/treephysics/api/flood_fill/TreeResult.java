@@ -49,7 +49,7 @@ public class TreeResult {
         if(!this.leaves && TreeUtil.isLeaf(state)) {
             this.leaves = !TreeUtil.isLeafPersistent(state);
         }
-        if(!this.dirt && state.is(BlockTags.DIRT)) {
+        if(!this.dirt && TreeUtil.isLog(state)) {
             BlockState belowState = blockGetter.getBlockState(pos.below());
             this.dirt = belowState.is(BlockTags.DIRT);
         }

@@ -53,12 +53,12 @@ public class FloodFillUtil {
 
     private static final TreeFloodFill TREE_VALIDATOR = new TreeFloodFill()
             .addRule(FloodFillUtil::logRule)
-            .addTag(TreePhysicsTags.TREE);
+            .setEarlyReturn(TreeResult::hasRoot);
 
     private static final TreeFloodFill ROOTLESS_TREE_VALIDATOR = new TreeFloodFill()
             .addRule(FloodFillUtil::logRule)
             .addRule(FloodFillUtil::leafRule)
-            .addTag(TreePhysicsTags.TREE);
+            .setEarlyReturn(result -> result.hasRoot() || (result.hasDirt() && result.hasLeaves()));
 
     private static final TreeFloodFill TREE_FINDER = new TreeFloodFill()
             .addRule(FloodFillUtil::logRule)
@@ -92,7 +92,7 @@ public class FloodFillUtil {
 
             TreeResult tree = floodFill.findBlocks(level, start);
 
-            if(tree != null && !tree.hasRoot()) {
+            if(tree != null && !(TreePhysicsConfig.ROOTLESS_TREE_DETECTION.get() ? tree.hasRoot() || tree.hasDirt() : tree.hasLeaves())) {
                 Set<BlockPos> treeBlocks = tree.getBlocks(TreePhysicsTags.TREE);
                 ServerSubLevel subLevel = SubLevelAssemblyHelper.assembleBlocks(level, pos, treeBlocks, new BoundingBox3i(pos, pos));
                 subLevels.add(subLevel);

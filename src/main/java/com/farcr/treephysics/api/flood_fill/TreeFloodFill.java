@@ -10,10 +10,12 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.*;
+import java.util.function.Predicate;
 
 public class TreeFloodFill {
     private final List<Rule> rules = new ArrayList<>();
     private final Set<TagKey<Block>> tags = new HashSet<>();
+    private Predicate<TreeResult> earlyReturn = null;
     private BlockPos ignorePos = null;
 
     public TreeFloodFill addRule(Rule rule) {
@@ -23,6 +25,11 @@ public class TreeFloodFill {
 
     public TreeFloodFill addTag(TagKey<Block> tag) {
         this.tags.add(tag);
+        return this;
+    }
+
+    public TreeFloodFill setEarlyReturn(Predicate<TreeResult> earlyReturn) {
+        this.earlyReturn = earlyReturn;
         return this;
     }
 
@@ -51,6 +58,10 @@ public class TreeFloodFill {
             if(!this.shouldIgnore(centerPos)) {
                 result.add(centerPos, centerState);
                 result.afterSpread(blockGetter, centerPos, centerState);
+            }
+
+            if(this.earlyReturn != null && this.earlyReturn.test(result)) {
+                break;
             }
 
             for (BlockPos offset : FloodFillUtil.DIRECTION_OFFSETS_CORNERS) {
