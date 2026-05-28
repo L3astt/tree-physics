@@ -3,6 +3,7 @@ package com.farcr.treephysics.api.util;
 import com.farcr.treephysics.api.LeafGroupManager;
 import com.farcr.treephysics.api.flood_fill.TreeResult;
 import com.farcr.treephysics.index.TreePhysicsTags;
+import dev.ryanhcode.sable.companion.math.BoundingBox3i;
 import dev.ryanhcode.sable.companion.math.BoundingBox3ic;
 import dev.ryanhcode.sable.sublevel.SubLevel;
 import net.minecraft.core.BlockPos;
@@ -18,6 +19,7 @@ import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
 import org.joml.Vector3dc;
 
+import java.util.List;
 import java.util.Set;
 
 public class TreeUtil {
@@ -32,6 +34,9 @@ public class TreeUtil {
 
     public static Iterable<BlockPos> plotIterator(SubLevel subLevel) {
         BoundingBox3ic box = subLevel.getPlot().getBoundingBox();
+        if(box.equals(BoundingBox3i.EMPTY)) {
+            return List.of();
+        }
         return BlockPos.betweenClosed(box.minX(), box.minY(), box.minZ(), box.maxX(), box.maxY(), box.maxZ());
     }
 

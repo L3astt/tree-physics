@@ -22,7 +22,9 @@ public class SubLevelAssemblyHelperMixin {
         ServerTreeManager handler = ServerTreeManager.get(level);
         if(handler.isTree(subLevel)) {
             ServerSubLevel returnValue = cir.getReturnValue();
-            handler.setSplitFrom(subLevel, returnValue);
+            if(returnValue.getSelfMassTracker().getMass() > 0.0 && returnValue.getSelfMassTracker().getCenterOfMass() != null) {
+                handler.setSplitFrom(subLevel, returnValue);
+            }
         }
     }
 
