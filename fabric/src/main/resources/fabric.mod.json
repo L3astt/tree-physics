@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "${mod_id}",
+  "version": "${mod_version}",
+  "name": "${mod_name}",
+  "description": "${mod_description}",
+  "authors": [
+    "Farcr",
+    "KyanBirb"
+  ],
+  "contact": {
+    "sources": "https://github.com/Alchemists-Of-Yore/tree-physics",
+    "issues": "${mod_issues}"
+  },
+  "license": "${mod_license}",
+  "icon": "${mod_id}.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.farcr.treephysics.fabric.TreePhysicsFabric::init"
+    ],
+    "client": [
+      "com.farcr.treephysics.fabric.TreePhysicsClientFabric::init"
+    ]
+  },
+  "mixins": [
+    "${mod_id}.mixins.json",
+    "${mod_id}.fabric.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${fabric_loader_version}",
+    "fabric-api": "*",
+    "minecraft": "${minecraft_version}",
+    "sable": ">=${sable_version_min}",
+    "java": ">=${java_version}"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}

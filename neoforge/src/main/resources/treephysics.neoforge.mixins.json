@@ -1,0 +1,22 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.farcr.treephysics.neoforge.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "plugin": "com.farcr.treephysics.TreePhysicsMixinPlugin",
+  "mixins": [
+    "compatibility.blueprint.BlueprintTreeFeatureMixin",
+    "compatibility.malum.LodestoneBlockFillerLayerMixin",
+    "compatibility.malum.SoulwoodTreeFeatureMixin",
+    "compatibility.spawn.DateTreeFeatureMixin"
+  ],
+  "client": [
+    "LevelRendererMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}

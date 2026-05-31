@@ -1,0 +1,34 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.farcr.treephysics.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "plugin": "com.farcr.treephysics.TreePhysicsMixinPlugin",
+  "mixins": [
+    "accessors.LevelAcceleratorAccessor",
+    "collision_effects.BeehiveBlockCallbackMixin",
+    "collision_effects.BlockWithSubLevelCallbackMixin",
+    "collision_effects.LeavesBlockMixin",
+    "entity_damage.LivingEntityMixin",
+    "leaf_collision.RapierPhysicsPipelineMixin",
+    "leaf_collision.VoxelNeighborhoodStateMixin",
+    "rooted_dirt_placement.TreeFeatureMixin",
+    "rooted_dirt_placement.TrunkPlacerMixin",
+    "tree_pushing.ServerboundPunchSubLevelPacketMixin",
+    "tree_splitting.SubLevelAssemblyHelperMixin",
+    "walk_through_leaves.BlockCollisionsMixin",
+    "walk_through_leaves.BlockStateBaseMixin",
+    "walk_through_leaves.LivingEntityMixin",
+    "walk_through_leaves.SubLevelEntityCollisionMixin"
+  ],
+  "client": [
+    "accessors.SpriteContentsAccessor",
+    "leaf_effect_fixes.ParticleEngineMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}
