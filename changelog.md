@@ -1,1 +1,5 @@
-- Fix server crash that occurs when Lithium is installed
+- Add compatibility for Malum
+- Fix suffocation and view blocking when walking through some leaves
+- Replace leaf group system with more general block grouping system 
+  - The format is the same, but now multiple types are possible and found under `data/<namespace>/treephysics/grouping/*.json`
+  - `treephysics:leaves` and `treephysics:logs` are used to determine block similarity in different contexts
