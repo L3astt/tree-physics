@@ -48,6 +48,11 @@ public class CommonEvents {
             }
 
             if(!player.isShiftKeyDown()) {
+                boolean supported = TreeUtil.isLog(level.getBlockState(pos.below()));
+                if (supported) {
+                    return;
+                }
+
                 if(TreePhysicsConfig.REQUIRES_AXE.getAsBoolean() && !player.getItemInHand(InteractionHand.MAIN_HAND).is(ItemTags.AXES)) {
                     return;
                 }
